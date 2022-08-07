@@ -3,6 +3,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+// Modules
+import { CategoriesModule } from './categories/categories.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,6 +21,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    CategoriesModule,
   ],
   controllers: [],
   providers: [],
