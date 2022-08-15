@@ -37,7 +37,7 @@ enum UserRoles = "guest", "customer", "manager", "administrator"
 - title: string
 - slug: string
 
-### Size extends CoreEntity []
+### Size extends CoreEntity [+]
 
 - isActive: boolean: default=true
 - title: string

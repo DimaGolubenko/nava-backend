@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Modules
 import { CategoriesModule } from './categories/categories.module';
+import { SizesModule } from './sizes/sizes.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { CategoriesModule } from './categories/categories.module';
       synchronize: true,
     }),
     CategoriesModule,
+    SizesModule,
   ],
   controllers: [],
   providers: [],
