@@ -15,13 +15,13 @@ export class Category extends CoreEntity {
   @Column({ default: true })
   isActive: boolean;
 
-  @ApiProperty({ example: 'blouses', description: 'Назва категорії' })
+  @ApiProperty({ example: 'Блузи', description: 'Назва категорії' })
   @IsString()
   @MinLength(3)
   @Column()
   title: string;
 
-  @ApiProperty({ example: 'Блузи', description: 'slug для url' })
+  @ApiProperty({ example: 'blouses', description: 'slug для url' })
   @IsOptional()
   @IsString()
   @Column({ nullable: true })
