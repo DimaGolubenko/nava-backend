@@ -9,18 +9,21 @@ import { CoreEntity } from 'common/entities/core.entity';
 
 @Entity({ name: 'sizes' })
 export class Size extends CoreEntity {
-  @ApiProperty({ description: 'Флаг відображення розміру на клієнті' })
+  @ApiProperty({
+    description: 'Флаг відображення розміру на клієнті',
+    required: false,
+  })
   @IsOptional()
   @IsBoolean()
   @Column({ default: true })
-  isActive: boolean;
+  isActive?: boolean;
 
   @ApiProperty({ example: '42', description: 'Назва розміру' })
   @IsString()
   @Column()
   title: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'slug для url', required: false })
   @IsOptional()
   @IsString()
   @Column({ nullable: true })
