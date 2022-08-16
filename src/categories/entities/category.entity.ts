@@ -9,11 +9,14 @@ import { CoreEntity } from 'common/entities/core.entity';
 
 @Entity({ name: 'categories' })
 export class Category extends CoreEntity {
-  @ApiProperty({ description: 'Флаг відображення товару на клієнті' })
+  @ApiProperty({
+    description: 'Флаг відображення товару на клієнті',
+    required: false,
+  })
   @IsOptional()
   @IsBoolean()
   @Column({ default: true })
-  isActive: boolean;
+  isActive?: boolean;
 
   @ApiProperty({ example: 'Блузи', description: 'Назва категорії' })
   @IsString()
@@ -21,7 +24,11 @@ export class Category extends CoreEntity {
   @Column()
   title: string;
 
-  @ApiProperty({ example: 'blouses', description: 'slug для url' })
+  @ApiProperty({
+    example: 'blouses',
+    description: 'slug для url',
+    required: false,
+  })
   @IsOptional()
   @IsString()
   @Column({ nullable: true })
