@@ -4,18 +4,7 @@
 - createdAt: Date
 - updatedAt: Date
 
-enum UserRoles = "guest", "customer", "manager", "administrator"
-
-### User []
-
-- isActive: boolean: default=true
-- email: string
-- password: string
-- firstName: string
-- lastName: string: nullable
-- role: UserRole: default="guest"
-
-### Product extends CoreEntity []
+### Product extends CoreEntity [+]
 
 - isActive: boolean: default=true
 - isNew: boolean: default=false
@@ -43,19 +32,29 @@ enum UserRoles = "guest", "customer", "manager", "administrator"
 - title: string
 - slug: string
 
-### ProductImage extends CoreEntity []
+### ProductImage extends CoreEntity [+]
 
 - isMain: boolean
 - src: string
 - alt: string
 - product: Product
 
-### ProductSize extends CoreEntity []
+### ProductSize extends CoreEntity [+]
 
-- title: string
-- slug: string
-- price: number: boolean
+- price: number: nullable
+- size: Size
 - product: Product
+
+enum UserRoles = "guest", "customer", "manager", "administrator"
+
+### User []
+
+- isActive: boolean: default=true
+- email: string
+- password: string
+- firstName: string
+- lastName: string: nullable
+- role: UserRole: default="guest"
 
 ### Favorite extends CoreEntity []
 
@@ -66,6 +65,7 @@ enum UserRoles = "guest", "customer", "manager", "administrator"
 
 - status: OrderStatus: enum
 - products: OrderProduct[]
+- user: User
 - address: OrderAddress
 
 ### OrderProduct extends CoreEntity []
