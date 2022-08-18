@@ -15,6 +15,6 @@ import { SizesController } from './sizes.controller';
   imports: [TypeOrmModule.forFeature([Size])],
   controllers: [SizesController],
   providers: [SizesService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, SizesService],
 })
 export class SizesModule {}
