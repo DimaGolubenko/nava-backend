@@ -1,5 +1,5 @@
 // Core
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -18,6 +18,7 @@ import { NotFoundProductException } from '../exceptions/not-found-product.except
 // Services
 import { ProductSizesService } from './product-sizes.service';
 import { ProductImagesService } from './product-images.service';
+import { CategoriesService } from 'categories/categories.service';
 
 @Injectable()
 export class ProductsService {
@@ -26,17 +27,34 @@ export class ProductsService {
     private readonly productRepo: Repository<Product>,
     private readonly productSizesService: ProductSizesService,
     private readonly productImagesService: ProductImagesService,
+    private readonly categoriesService: CategoriesService,
+    private dataSource: DataSource,
   ) {}
 
   async create(createProductDto: CreateProductDto): Promise<void> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
     try {
-      const newProduct = await this.productRepo.save(
-        this.productRepo.create(createProductDto),
+      const newProduct = this.productRepo.create(createProductDto);
+      await queryRunner.manager.save(newProduct);
+      const images = await this.productImagesService.createOrUpdateList(
+        createProductDto.images,
+        newProduct,
       );
-      await this.productImagesService.createList(createProductDto, newProduct);
-      await this.productSizesService.createList(createProductDto, newProduct);
-    } catch (error) {
-      throw new InternalServerErrorException(error.message);
+      await queryRunner.manager.save(images);
+      const sizes = await this.productSizesService.createOrUpdateList(
+        createProductDto.sizes,
+        newProduct,
+      );
+      await queryRunner.manager.save(sizes);
+
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+      throw new InternalServerErrorException(err.message);
+    } finally {
+      await queryRunner.release();
     }
   }
 
@@ -78,13 +96,47 @@ export class ProductsService {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
     try {
       await this.findOne(id);
-      this.productRepo.save({ id, ...updateProductDto });
-    } catch (error) {
-      throw new InternalServerErrorException(error.message);
+      // Update product
+      const updatedProduct = this.productRepo.create({
+        ...updateProductDto,
+        id,
+      });
+
+      await queryRunner.manager.save(updatedProduct);
+      // Update images
+      const images = await this.productImagesService.createOrUpdateList(
+        updateProductDto.images,
+        updatedProduct,
+      );
+      await queryRunner.manager.save(images);
+      // Update sizes
+      const sizes = await this.productSizesService.createOrUpdateList(
+        updateProductDto.sizes,
+        updatedProduct,
+      );
+      await queryRunner.manager.save(sizes);
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+      throw new InternalServerErrorException(err.message);
+    } finally {
+      await queryRunner.release();
     }
   }
+
+  // async update(id: number, updateProductDto: UpdateProductDto) {
+  //   try {
+  //     await this.findOne(id);
+  //     this.productRepo.save({ id, ...updateProductDto });
+  //   } catch (error) {
+  //     throw new InternalServerErrorException(error.message);
+  //   }
+  // }
 
   async remove(id: number): Promise<void> {
     try {

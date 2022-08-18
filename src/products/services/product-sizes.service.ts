@@ -5,36 +5,38 @@ import { Repository } from 'typeorm';
 
 // Entities
 import { ProductSize } from 'products/entities/product-size.entity';
-import { Size } from 'sizes/entities/size.entity';
 import { Product } from 'products/entities/product.entity';
 
 // DTOs
-import { CreateProductDto } from './../dto/create-product.dto';
+import { CreateProductSizeDto } from 'products/dto/create-product-size.dto';
+import { UpdateProductSizeDto } from 'products/dto/update-product-size.dto';
+
+// Services
+import { SizesService } from 'sizes/sizes.service';
 
 @Injectable()
 export class ProductSizesService {
   constructor(
     @InjectRepository(ProductSize)
     private readonly productSizeRepo: Repository<ProductSize>,
-    @InjectRepository(Size)
-    private readonly sizeRepo: Repository<Size>,
+    private readonly sizesService: SizesService,
   ) {}
 
-  async createList(
-    createProductDto: CreateProductDto,
+  async createOrUpdateList(
+    productSizesDto: CreateProductSizeDto[] | UpdateProductSizeDto[],
     product: Product,
-  ): Promise<void> {
+  ): Promise<ProductSize[]> {
     const sizes = [];
-    for (const size of createProductDto.sizes) {
-      const sizeEntity = await this.sizeRepo.findOneBy({ id: size.sizeId });
+    for (const sizeItem of productSizesDto) {
+      const sizeEntity = await this.sizesService.findOne(sizeItem.sizeId);
       sizes.push(
         this.productSizeRepo.create({
-          ...size,
+          ...sizeItem,
           size: sizeEntity,
           product,
         }),
       );
     }
-    await this.productSizeRepo.save(sizes);
+    return sizes;
   }
 }

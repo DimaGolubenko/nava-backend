@@ -8,7 +8,8 @@ import { ProductImage } from 'products/entities/product-image.entity';
 import { Product } from 'products/entities/product.entity';
 
 // DTOs
-import { CreateProductDto } from 'products/dto/create-product.dto';
+import { CreateProductImageDto } from 'products/dto/create-product-image.dto';
+import { UpdateProductImageDto } from 'products/dto/update-product-image.dto';
 
 @Injectable()
 export class ProductImagesService {
@@ -17,16 +18,14 @@ export class ProductImagesService {
     private readonly productImageRepo: Repository<ProductImage>,
   ) {}
 
-  async createList(
-    createProductDto: CreateProductDto,
+  async createOrUpdateList(
+    createProductImageDto: CreateProductImageDto[] | UpdateProductImageDto[],
     product: Product,
-  ): Promise<void> {
-    const images = createProductDto.images.map((image) =>
-      this.productImageRepo.create({
-        ...image,
-        product,
-      }),
-    );
-    await this.productImageRepo.save(images);
+  ): Promise<ProductImage[]> {
+    const images = createProductImageDto.map((image) => ({
+      ...image,
+      product,
+    }));
+    return this.productImageRepo.create(images);
   }
 }

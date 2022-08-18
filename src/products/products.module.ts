@@ -17,11 +17,13 @@ import { ProductsController } from './products.controller';
 
 // Modules
 import { SizesModule } from 'sizes/sizes.module';
+import { CategoriesModule } from 'categories/categories.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Product, ProductImage, ProductSize]),
     SizesModule,
+    CategoriesModule,
   ],
   controllers: [ProductsController],
   providers: [ProductsService, ProductSizesService, ProductImagesService],
