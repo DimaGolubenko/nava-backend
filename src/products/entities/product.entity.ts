@@ -1,15 +1,8 @@
 // Core
 import { ApiProperty } from '@nestjs/swagger';
 import { customAlphabet } from 'nanoid';
-import { Type } from 'class-transformer';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
-import {
-  IsBoolean,
-  IsNumber,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 // Entities
 import { CoreEntity } from 'common/entities/core.entity';
@@ -76,17 +69,12 @@ export class Product extends CoreEntity {
 
   @ApiProperty({ description: 'ID категорії товарів' })
   @IsNumber()
+  @Column({ nullable: true })
   categoryId: number;
 
-  @ApiProperty({ type: () => [ProductImage] })
-  @ValidateNested({ each: true })
-  @Type(() => ProductImage)
   @OneToMany(() => ProductImage, (productImages) => productImages.product)
   images: ProductImage[];
 
-  @ApiProperty({ type: () => [ProductSize] })
-  @ValidateNested({ each: true })
-  @Type(() => ProductSize)
   @OneToMany(() => ProductSize, (productSize) => productSize.product)
   sizes: ProductSize[];
 

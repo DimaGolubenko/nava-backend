@@ -22,12 +22,22 @@ export class ProductSize extends CoreEntity {
   @Column({ nullable: true })
   discountPrice?: number;
 
-  @ManyToOne(() => Size, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Size, {
+    onDelete: 'CASCADE',
+  })
   size: Size;
 
   @ApiProperty({ description: 'ID розміру товару' })
+  @IsNumber()
+  @Column()
   sizeId: number;
 
   @ManyToOne(() => Product, { onDelete: 'CASCADE' })
   product: Product;
+
+  @ApiProperty({ description: 'ID товару' })
+  @IsOptional()
+  @IsNumber()
+  @Column()
+  productId: number;
 }

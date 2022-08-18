@@ -1,6 +1,6 @@
 // Core
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Column, Entity, ManyToOne } from 'typeorm';
 
 // Entities
@@ -18,6 +18,12 @@ export class ProductImage extends CoreEntity {
     onDelete: 'CASCADE',
   })
   product: Product;
+
+  @ApiProperty({ description: 'ID товару' })
+  @IsOptional()
+  @IsNumber()
+  @Column()
+  productId: number;
 
   @ApiProperty({ description: 'Чи є зображення головним', required: false })
   @IsOptional()
