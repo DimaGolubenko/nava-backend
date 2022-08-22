@@ -47,7 +47,7 @@
 
 enum UserRoles = "guest", "customer", "manager", "administrator"
 
-### User []
+### User [+]
 
 - isActive: boolean: default=true
 - email: string

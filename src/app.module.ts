@@ -8,6 +8,7 @@ import { CategoriesModule } from 'categories/categories.module';
 import { SizesModule } from 'sizes/sizes.module';
 import { ProductsModule } from 'products/products.module';
 import { FilesModule } from 'files/files.module';
+import { UsersModule } from 'users/users.module';
 
 // Configs
 import { getMysqlDbConfig } from 'config/mysql.config';
@@ -26,6 +27,7 @@ import { getMysqlDbConfig } from 'config/mysql.config';
     SizesModule,
     ProductsModule,
     FilesModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],
