@@ -18,7 +18,6 @@ import { NotFoundProductException } from '../exceptions/not-found-product.except
 // Services
 import { ProductSizesService } from './product-sizes.service';
 import { ProductImagesService } from './product-images.service';
-import { CategoriesService } from 'categories/categories.service';
 
 @Injectable()
 export class ProductsService {
@@ -27,7 +26,6 @@ export class ProductsService {
     private readonly productRepo: Repository<Product>,
     private readonly productSizesService: ProductSizesService,
     private readonly productImagesService: ProductImagesService,
-    private readonly categoriesService: CategoriesService,
     private dataSource: DataSource,
   ) {}
 
@@ -128,15 +126,6 @@ export class ProductsService {
       await queryRunner.release();
     }
   }
-
-  // async update(id: number, updateProductDto: UpdateProductDto) {
-  //   try {
-  //     await this.findOne(id);
-  //     this.productRepo.save({ id, ...updateProductDto });
-  //   } catch (error) {
-  //     throw new InternalServerErrorException(error.message);
-  //   }
-  // }
 
   async remove(id: number): Promise<void> {
     try {
