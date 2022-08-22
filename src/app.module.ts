@@ -4,9 +4,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Modules
-import { CategoriesModule } from './categories/categories.module';
-import { SizesModule } from './sizes/sizes.module';
-import { ProductsModule } from './products/products.module';
+import { CategoriesModule } from 'categories/categories.module';
+import { SizesModule } from 'sizes/sizes.module';
+import { ProductsModule } from 'products/products.module';
+import { FilesModule } from 'files/files.module';
 
 // Configs
 import { getMysqlDbConfig } from 'config/mysql.config';
@@ -24,6 +25,7 @@ import { getMysqlDbConfig } from 'config/mysql.config';
     CategoriesModule,
     SizesModule,
     ProductsModule,
+    FilesModule,
   ],
   controllers: [],
   providers: [],

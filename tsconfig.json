@@ -21,8 +21,10 @@
       "common/*": ["./common/*"],
       "categories/*": ["./categories/*"],
       "users/*": ["./users/*"],
+      "auth/*": ["./auth/*"],
       "products/*": ["./products/*"],
       "sizes/*": ["./sizes/*"],
+      "files/*": ["./files/*"],
       "favorites/*": ["./favorites/*"],
       "src/*": ["./src/*"]
     }
