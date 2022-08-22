@@ -3,15 +3,16 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+// Configs
+import { getMysqlDbConfig } from 'config/mysql.config';
+
 // Modules
 import { CategoriesModule } from 'categories/categories.module';
 import { SizesModule } from 'sizes/sizes.module';
 import { ProductsModule } from 'products/products.module';
 import { FilesModule } from 'files/files.module';
 import { UsersModule } from 'users/users.module';
-
-// Configs
-import { getMysqlDbConfig } from 'config/mysql.config';
+import { AuthModule } from 'auth/auth.module';
 
 @Module({
   imports: [
@@ -23,11 +24,12 @@ import { getMysqlDbConfig } from 'config/mysql.config';
       inject: [ConfigService],
       useFactory: getMysqlDbConfig,
     }),
+    AuthModule,
+    UsersModule,
+    ProductsModule,
     CategoriesModule,
     SizesModule,
-    ProductsModule,
     FilesModule,
-    UsersModule,
   ],
   controllers: [],
   providers: [],

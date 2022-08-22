@@ -1,0 +1,7 @@
+// Core
+import { PickType } from '@nestjs/swagger';
+
+// Entities
+import { User } from 'users/entities/user.entity';
+
+export class LoginDto extends PickType(User, ['email', 'password']) {}
