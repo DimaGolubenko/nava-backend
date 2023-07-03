@@ -18,13 +18,13 @@ export class Color extends CoreEntity {
   @Column({ default: true })
   isActive?: boolean;
 
-  @ApiProperty({ example: '42', description: 'Назва розміру' })
+  @ApiProperty({ example: 'чорний', description: 'Назва кольору' })
   @IsString()
   @Column()
   title: string;
 
   @ApiProperty({
-    example: '42',
+    example: 'black',
     description: 'slug для url',
     required: false,
   })
