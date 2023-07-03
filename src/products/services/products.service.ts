@@ -67,11 +67,13 @@ export class ProductsService {
         take: perPage,
       });
       const totalResults = await this.productRepo.count();
+      const totalPages = Math.ceil(totalResults / perPage);
       return {
         results,
         page,
         perPage,
         totalResults,
+        totalPages,
       };
     } catch (error) {
       throw new InternalServerErrorException(error.message);
