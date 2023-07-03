@@ -10,7 +10,7 @@ import { CoreEntity } from 'common/entities/core.entity';
 @Entity({ name: 'categories' })
 export class Category extends CoreEntity {
   @ApiProperty({
-    description: 'Флаг відображення товару на клієнті',
+    description: 'Флаг відображення категорії на клієнті',
     required: false,
   })
   @IsOptional()
