@@ -5,11 +5,11 @@ export const getMysqlDbConfig = async (
   configService: ConfigService,
 ): Promise<TypeOrmModuleOptions> => ({
   type: 'mysql',
-  host: configService.get('DB_HOST'),
-  port: configService.get('DB_PORT'),
-  username: configService.get('DB_USERNAME'),
-  password: configService.get('DB_PASSWORD'),
-  database: configService.get('DB_DATABASE'),
+  host: configService.get('MYSQL_HOST'),
+  port: configService.get('MYSQL_PORT'),
+  username: configService.get('MYSQL_USERNAME'),
+  password: configService.get('MYSQL_PASSWORD'),
+  database: configService.get('MYSQL_DATABASE'),
   entities: ['dist/**/*.entity{.ts,.js}'],
   synchronize: true,
 });
