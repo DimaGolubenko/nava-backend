@@ -28,7 +28,7 @@ export class CategoriesService {
   }
 
   findAll(): Promise<Category[]> {
-    return this.categoryRepo.find();
+    return this.categoryRepo.find({ order: { createdAt: 'DESC' } });
   }
 
   async findOne(id: number): Promise<Category> {
