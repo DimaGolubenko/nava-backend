@@ -13,6 +13,7 @@ import { ProductsModule } from 'products/products.module';
 import { FilesModule } from 'files/files.module';
 import { UsersModule } from 'users/users.module';
 import { AuthModule } from 'auth/auth.module';
+import { ColorsModule } from 'colors/colors.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AuthModule } from 'auth/auth.module';
     CategoriesModule,
     SizesModule,
     FilesModule,
+    ColorsModule,
   ],
   controllers: [],
   providers: [],
